@@ -1,0 +1,23 @@
+---
+- name: Looping on mars data from NASA
+  host: localhost
+  connection: local
+  gather_facts: no # setup.py
+
+  # wget <nasa-uri> -O /nasadata.json
+  # vars_files:
+  #       /nasadata.json
+  #
+  vars:
+          examplevar: "string value"
+          instrvar: "zach value"
+          # list of lookup plugins - ansible-doc -t lookup -l
+          nasadata: "{{ lookup('url', 'https://', wantedList=True)  }}"
+
+  tasks:
+          -name: loop across data using loop statement
+          debug:
+                  var: nasadata      # var does NOT expect "{{ yourvar }}" syntax
+
+
+          loop: " {{ nasadata }}"
